@@ -1,0 +1,8 @@
+.navbar a {
+    color:red;
+    border: 1px solid green;
+    border-radius: 20px;
+    padding: 5px;
+    margin: 10px;
+    background-color: black
+}

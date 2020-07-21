@@ -1,0 +1,152 @@
+events:
+--------
+onclick
+ondblclick
+onmouseover
+onmouseout
+onload {apply on body tag}
+onerror {apply on image tag }
+onmousemove {if you move near to the img or element it triggers..}
+onresize { when ever changing the size of page, applied at body level'}
+onselect {which is applied in the form fields}
+onblur { loosing the focus on a form field }
+onfocus { making a focus on a form field }
+
+DOM Manipulation
+----------------
+  Querying Dom:
+------------
+  Document Object Model is nothing but Your HTML document..
+  we can manipulate DOM using..{get in to console..}
+  document.getElementById()
+  document.getElementsByClassName()
+  document.getElementsByTagName()
+  document.querySelector()   # short way--.$('.classname') (or) $('#id name')
+  document.querySelectorAll()
+
+Retrieving Text:
+----------------
+var x=document.querySelector('.classname')
+x.textContent   ==>Gives the content of eleemts
+x.innerHTML  ==>Gives the tags with data..
+
+On HTML COLLECTION we can use for loop in 2 ways..
+1st way:
+--------
+for(i=0;i<data.length; i++) {
+  console.log(data[i])
+}
+
+2nd way:
+-------
+As it is a HTML COLLECTION, first need to convert that to an array by below way.
+
+eg:
+var data = document.querySelectorAll('p')
+
+Array.from(data).forEach(function(item){
+console.log(item);
+item.innerHTML += "NEW TEXT";
+console.log(item.textContent);
+})
+
+Dom Traversing:
+-----------------
+Each and every Tag can be called as a Node in JS..
+var data = document.querySelector('h1')
+console.log(data.nodeType)  # gives the value , There are Nodetype return values in JS
+console.log(data.nodeName)
+console.log(data.hasChildrens) # finds the children..
+we can also clone a node...
+var new_data = data.cloneNode(true) (or use false...) {true shows all elements, false gives single element}
+
+var myuls = document.querySelector('.MYUL')
+console.log(myuls.parentNode)
+console.log(myuls.parentElement.parentElement)
+console.log(myuls.children)
+console.log(myuls.childNodes)
+var data = document.nextsiblingElement
+var data = document.previosElementSibling
+
+Events:
+--------
+var data = document.querySelector('a')
+
+data.addEventListener('click', function(e){
+  e.preventDefault();
+  console.log("default behavior is prohibited:")});
+
+Grabbing form data:
+-------------------
+var mydata = document.forms['myform']
+
+mydata.addEventListener('submit', function(e){
+  e.preventDefault();
+  const value=mydata.querySelector('input[type="text"]').value;
+  console.log(value)});
+
+mydata.addEventListener('submit', function(e){
+  e.preventDefault();
+  const new_data = mydata.querySelector('input[type="text"]').value;
+  console.log(new_data);
+  const mytag = document.createElement('h1');
+  mydata.appendChild(mytag);
+  mytag.textContent=new_data;});
+
+index.html:
+-----------
+
+<html>
+  <head>
+    <title>This is a single page application</title>
+    <link rel="stylesheet" href="theme.css"/>
+    </head>
+    <body>
+
+      <div class="navbar">
+        <a class="nav-item" href="#home">Home</a>
+        <a class="nav-item" href="#about">About</a>
+        <a class="nav-item" href="#contact">Contact Us</a>
+      </div>
+
+      <h2 id="myid"></h2>
+      <script src="app.js">
+      </script>
+    </body>
+
+  </html>
+---------------------
+app.js
+--------
+function getContent(fragmentID){
+  var partials = {
+    home:"This is my home",
+    about:"THis is a contact page!",
+    contact:"This is our contact page!!",
+  }
+  return partials[fragmentID];
+};
+
+function navbar(){
+  var mycontent = document.getElementById('myid');
+  fragmentID = location.hash.substr(1);
+  mycontent.innerHTML = getContent(fragmentID);
+  //console.log(location.hash);
+}
+if (!location.hash) {
+  location.hash = "#home";
+}
+navbar();
+window.addEventListener('hashchange', navbar);
+
+------------------------
+theme.js
+------------
+.navbar a {
+    color:red;
+    border: 1px solid green;
+    border-radius: 20px;
+    padding: 5px;
+    margin: 10px;
+    background-color: black
+}
